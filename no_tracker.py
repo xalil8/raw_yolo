@@ -4,7 +4,9 @@ import torch
 import time
 
 # Load the detection model
-model = torch.hub.load("ultralytics/yolov5", "custom", path="v4.pt", force_reload=False, device="mps")
+device = "cuda:0" if torch.cuda.is_available() else "mps" if torch.cuda.is_available("0") else "cpu"
+
+model = torch.hub.load("ultralytics/yolov5", "custom", path="v4.pt", force_reload=False, device=device)
 model.conf = 0.8
 class_names = model.names
 model.classes = [2]
